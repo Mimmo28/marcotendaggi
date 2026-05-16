@@ -1,0 +1,120 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { Image } from "astro:assets";
+import logoSito from "../assets/logo/logo_sito.png";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-primary border-t border-border pt-12 md:pt-16 pb-8 mt-auto">
+  <div
+    class="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12"
+  >
+    <div class="col-span-1 sm:col-span-2">
+      <div class="flex items-center gap-3 md:gap-4 mb-6">
+        <Image
+          src={logoSito}
+          alt="Mega Shop Arredi Logo"
+          class="h-14 md:h-20 w-auto object-contain"
+          loading="lazy"
+        />
+        <span
+          class="text-accent-text font-heading font-bold text-xl md:text-2xl tracking-wide"
+          >MEGASHOP ARREDI</span
+        >
+      </div>
+      <p class="text-text/70 max-w-sm font-light leading-relaxed mb-8">
+        {t("footer.desc")}
+      </p>
+
+      <div class="flex gap-5">
+        <a href={t('social.facebook')} target="_blank" rel="noopener noreferrer" class="text-text/60 hover:text-accent-text transition-all duration-300 transform hover:-translate-y-1" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+        <a href={t('social.instagram')} target="_blank" rel="noopener noreferrer" class="text-text/60 hover:text-accent-text transition-all duration-300 transform hover:-translate-y-1" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href={t('social.tiktok')} target="_blank" rel="noopener noreferrer" class="text-text/60 hover:text-accent-text transition-all duration-300 transform hover:-translate-y-1" aria-label="TikTok">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h3
+        class="font-semibold uppercase tracking-wider mb-4 text-sm text-accent-text"
+      >
+        {t("footer.contacts")}
+      </h3>
+      <ul class="space-y-3 text-text/80 font-light text-sm">
+        <li>
+          <a
+            href="https://maps.app.goo.gl/uYutyV15jDfAmnhV6"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="transition-colors duration-300 hover:text-accent-text hover:underline block"
+          >
+            Via Nazionale, 4<br />
+            92010 Alessandria della Rocca (AG)
+          </a>
+        </li>
+        <li>
+          Tel: <a
+            href="tel:3312527613"
+            class="hover:text-accent-text transition-colors font-medium"
+            >3312527613</a
+          > (Domenico)
+        </li>
+        <li>
+          Email: <a
+            href="mailto:info@megashoparredi.it"
+            class="hover:text-accent-text transition-colors"
+            >info@megashoparredi.it</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h3
+        class="font-semibold uppercase tracking-wider mb-4 text-sm text-accent-text"
+      >
+        {t("footer.hours")}
+      </h3>
+      <ul class="space-y-3 text-text/80 font-light text-sm">
+        <li>{t("footer.hours.val1")}</li>
+        <li>{t("footer.hours.val2")}</li>
+        <li>{t("footer.hours.val3")}</li>
+        <li>{t("footer.hours.val4")}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div
+    class="max-w-7xl mx-auto px-4 md:px-6 mt-12 md:mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between text-xs text-text/75"
+  >
+    <p>&copy; {year} MegaShop Arredi. {t("footer.rights")}</p>
+    <div class="flex gap-4 mt-4 md:mt-0">
+      <a href="/privacy" class="transition-colors hover:text-accent-text"
+        >Privacy & Cookie Policy</a
+      >
+    </div>
+  </div>
+
+  <div
+    class="max-w-7xl mx-auto px-4 md:px-6 mt-8 pt-6 border-t border-border/30 text-center text-xs text-text/75 font-light"
+  >
+    <div class="mb-2">
+      MegaShop Arredi - P.IVA: 02913370843 - Sede Legale: Via Nazionale, 4,
+      92010 Alessandria della Rocca (AG)
+    </div>
+    <div class="text-[10px] md:text-xs text-text/70 tracking-wider">
+      Engineered by <a href="https://www.instagram.com/domenico.innamorato?igsh=MW0yaHhuZmJuZjFsMQ==" target="_blank" rel="noopener noreferrer" class="transition-all duration-500 hover:text-accent-text font-medium whitespace-nowrap"
+        >The Dev Heart</a
+      >
+    </div>
+  </div>
+</footer>

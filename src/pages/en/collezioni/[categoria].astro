@@ -1,0 +1,105 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  const categories = [
+    { title: "Kitchens", slug: "cucine", description: "Explore our modern and classic kitchens in Alessandria della Rocca (AG). Design, ergonomics, and quality for the heart of your home with Mega Shop Arredi." },
+    { title: "Sofas", slug: "divani", description: "Comfort and style for your relaxation. Discover the collection of sofas at Mega Shop Arredi, your trusted furniture store in the province of Agrigento." },
+    { title: "Bedrooms", slug: "camere", description: "Transform your sleeping area into an oasis of peace. Elegant and functional bedrooms in Alessandria della Rocca at Mega Shop Arredi." },
+    { title: "Kids' Rooms", slug: "camerette", description: "Safe and colorful spaces for the little ones. Discover the best kids' rooms in Alessandria della Rocca (AG) with Mega Shop Arredi." },
+    { title: "Wall Units", slug: "pareti", description: "Organize your living room with style. Modern and modular wall units from Mega Shop Arredi in Alessandria della Rocca." },
+    { title: "Dining Rooms", slug: "sale", description: "Create unforgettable moments at the table. Designer dining rooms in Alessandria della Rocca at our showroom." },
+    { title: "TV Units", slug: "mobili_porta_tv", description: "Functional and aesthetic solutions for your entertainment. TV units in Alessandria della Rocca (AG)." },
+    { title: "Tables / Consoles / Coffee Tables", slug: "tavoli", description: "Details that make the difference. Designer tables and consoles for every environment of your home in Alessandria della Rocca." },
+    { title: "Sideboards & Storage", slug: "madie_contenitori", description: "Practicality and aesthetics for your home. Discover high-quality sideboards and storage units from Mega Shop Arredi in Alessandria della Rocca." },
+    { title: "Office", slug: "ufficio", description: "Work with style and comfort. Office and smart working furniture in Alessandria della Rocca (AG) at Mega Shop Arredi." },
+    { title: "Bookcases", slug: "librerie", description: "Give space to your books with elegance. Modern and classic bookcases in Alessandria della Rocca, province of Agrigento." },
+    { title: "Hallway Furniture", slug: "mobili_ingresso", description: "The best welcome for your home. Functional and designer hallway furniture in Alessandria della Rocca (AG)." },
+    { title: "Shoe Racks & Multi-Use", slug: "scarpiere", description: "Intelligent organization for every space. Shoe racks and multi-use furniture in Alessandria della Rocca at Mega Shop Arredi." },
+    { title: "Storage Beds", slug: "letto-contenitore", description: "Optimize space without sacrificing comfort. Quality storage beds in Alessandria della Rocca (AG)." },
+    { title: "Outdoor Furniture", slug: "arredo_giardino_contract_spiaggia", description: "Live the outdoors with style. Solutions for garden and contract furniture in Alessandria della Rocca and throughout Sicily." },
+  ];
+
+  return categories.map(cat => ({
+    params: { categoria: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { categoria } = Astro.params;
+const { category } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+// Use import.meta.glob to load all images for this category
+const allImages = import.meta.glob('/public/images/**/*.{jpeg,jpg,png,webp}', { eager: true });
+const categoryImages = Object.keys(allImages)
+  .filter(path => path.includes(`/public/images/${categoria}/`))
+  .map(path => path.replace('/public', ''));
+
+const heroImage = categoryImages.length > 0 ? categoryImages[0] : '/placeholder.jpg';
+---
+<Layout title={`${category.title} | Collections`} description={category.description}>
+  {/* Hero Header Section */}
+  <section class="relative h-[40vh] min-h-[350px] md:min-h-[400px] w-full bg-black flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 w-full h-full opacity-60">
+      <img src={heroImage} alt={`${category.title} Hero`} class="w-full h-full object-cover object-center" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+    </div>
+    
+    <div class="relative z-10 text-center text-white px-6 w-full max-w-4xl mx-auto mt-12 pb-4">
+      <a href={translatePath('/#collezioni')} class="inline-flex items-center justify-center gap-2 text-white/80 hover:text-accent-text transition-colors text-xs md:text-sm uppercase tracking-widest mb-6 font-bold drop-shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        {t('category.back')}
+      </a>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold font-heading mb-6 text-white drop-shadow-2xl tracking-tight uppercase">{category.title}</h1>
+      <div class="w-16 h-1 bg-accent mx-auto mb-6"></div>
+      <p class="text-base sm:text-lg md:text-xl font-light text-white/90 drop-shadow-md max-w-3xl mx-auto leading-relaxed">
+        {category.description}
+      </p>
+    </div>
+  </section>
+
+  {/* Gallery Section */}
+  <section class="py-24 px-6 max-w-7xl mx-auto min-h-[50vh]">
+    {categoryImages.length > 0 ? (
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
+        {categoryImages.map((img, index) => (
+          <div class="break-inside-avoid relative group overflow-hidden bg-white shadow-lg shadow-black/5 hover:shadow-2xl transition-shadow duration-500 rounded-sm">
+            <img 
+              src={img} 
+              alt={`${category.title} - Image ${index + 1}`} 
+              class="w-full h-auto object-cover transform group-hover:scale-[1.05] transition-transform duration-[1.5s] ease-out"
+              loading="lazy"
+              data-lightbox="true"
+            />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 pointer-events-none flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 transform scale-50 group-hover:scale-100 transition-all duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="w-full flex flex-col items-center justify-center py-32 text-center bg-primary border border-border/50">
+        <div class="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center mb-8 border border-accent/20">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-accent">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+        </div>
+        <h3 class="text-3xl font-heading font-bold text-text mb-4 tracking-tight">{t('category.gallery_updating')}</h3>
+        <p class="text-text/60 font-light text-lg">{t('category.gallery_desc')}</p>
+      </div>
+    )}
+  </section>
+</Layout>

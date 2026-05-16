@@ -1,0 +1,108 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { Image } from 'astro:assets';
+
+export function getStaticPaths() {
+  const categories = [
+    { title: "Cucine", slug: "cucine", description: "Esplora le nostre cucine moderne e classiche a Alessandria della Rocca (AG). Design, ergonomia e qualità per il cuore della tua casa con Mega Shop Arredi." },
+    { title: "Divani", slug: "divani", description: "Comfort e stile per il tuo relax. Scopri la collezione di divani presso Mega Shop Arredi, il tuo negozio di arredi di fiducia in provincia di Agrigento." },
+    { title: "Camere da Letto", slug: "camere", description: "Trasforma la tua zona notte in un'oasi di pace. Camere da letto eleganti e funzionali a Alessandria della Rocca presso Mega Shop Arredi." },
+    { title: "Camerette", slug: "camerette", description: "Spazi sicuri e colorati per i più piccoli. Scopri le migliori camerette a Alessandria della Rocca (AG) con Mega Shop Arredi." },
+    { title: "Pareti Attrezzate", slug: "pareti", description: "Organizza il tuo living con stile. Pareti attrezzate moderne e componibili da Mega Shop Arredi a Alessandria della Rocca." },
+    { title: "Sale da Pranzo", slug: "sale", description: "Crea momenti indimenticabili a tavola. Sale da pranzo di design a Alessandria della Rocca presso il nostro showroom." },
+    { title: "Mobili Porta TV", slug: "mobili_porta_tv", description: "Soluzioni funzionali ed estetiche per il tuo intrattenimento. Mobili porta TV a Alessandria della Rocca (AG)." },
+    { title: "Tavoli / Consolle / Tavolini", slug: "tavoli", description: "Dettagli che fanno la differenza. Tavoli e consolle di design per ogni ambiente della tua casa a Alessandria della Rocca." },
+    { title: "Madie & Contenitori", slug: "madie_contenitori", description: "Praticità ed estetica per la tua casa. Scopri madie e contenitori di alta qualità da Mega Shop Arredi ad Alessandria della Rocca." },
+    { title: "Ufficio", slug: "ufficio", description: "Lavora con stile e comfort. Mobili per ufficio e smart working a Alessandria della Rocca (AG) presso Mega Shop Arredi." },
+    { title: "Librerie", slug: "librerie", description: "Dai spazio ai tuoi libri con eleganza. Librerie moderne e classiche a Alessandria della Rocca, provincia di Agrigento." },
+    { title: "Mobili Ingresso", slug: "mobili_ingresso", description: "La migliore accoglienza per la tua casa. Mobili ingresso funzionali e di design a Alessandria della Rocca (AG)." },
+    { title: "Scarpiere & Multi-Uso", slug: "scarpiere", description: "Organizzazione intelligente per ogni spazio. Scarpiere e mobili multiuso a Alessandria della Rocca presso Mega Shop Arredi." },
+    { title: "Letti Contenitore", slug: "letto-contenitore", description: "Ottimizza lo spazio senza rinunciare al comfort. Letti contenitore di qualità a Alessandria della Rocca (AG)." },
+    { title: "Arredo Giardino", slug: "arredo_giardino_contract_spiaggia", description: "Vivi l'outdoor con stile. Soluzioni per arredo giardino e contract a Alessandria della Rocca e in tutta la Sicilia." },
+  ];
+
+  return categories.map(cat => ({
+    params: { categoria: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { categoria } = Astro.params;
+const { category } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+// Use import.meta.glob to load all images for this category from assets
+const allImages = import.meta.glob('../../assets/images/**/*.{jpeg,jpg,png,webp}', { eager: true });
+const categoryImagesGroups = Object.keys(allImages)
+  .filter(path => path.includes(`/assets/images/${categoria}/`))
+  .map(path => (allImages[path] as any).default);
+
+const heroImage = categoryImagesGroups.length > 0 ? categoryImagesGroups[0] : null;
+---
+<Layout title={`${category.title} | Collezioni`} description={category.description}>
+  {/* Hero Header Section */}
+  <section class="relative h-[40vh] min-h-[350px] md:min-h-[400px] w-full bg-black flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 w-full h-full opacity-60">
+      {heroImage && <Image src={heroImage} alt={`${category.title} Hero`} class="w-full h-full object-cover object-center" loading="eager" width={1920} height={400} />}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+    </div>
+    
+    <div class="relative z-10 text-center text-white px-6 w-full max-w-4xl mx-auto mt-12 pb-4">
+      <a href={translatePath('/#collezioni')} class="inline-flex items-center justify-center gap-2 text-white/80 hover:text-accent-text transition-colors text-xs md:text-sm uppercase tracking-widest mb-6 font-bold drop-shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        {t('category.back')}
+      </a>
+      <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold font-heading mb-6 text-white drop-shadow-2xl tracking-tight uppercase">{category.title}</h1>
+      <div class="w-16 h-1 bg-accent mx-auto mb-6"></div>
+      <p class="text-base sm:text-lg md:text-xl font-light text-white/90 drop-shadow-md max-w-3xl mx-auto leading-relaxed">
+        {category.description}
+      </p>
+    </div>
+  </section>
+
+  {/* Gallery Section */}
+  <section class="py-24 px-6 max-w-7xl mx-auto min-h-[50vh]">
+    {categoryImagesGroups.length > 0 ? (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {categoryImagesGroups.map((img, index) => (
+          <div class="relative group overflow-hidden bg-white shadow-lg shadow-black/5 hover:shadow-2xl transition-shadow duration-500 rounded-sm flex flex-col">
+            <Image 
+              src={img} 
+              alt={`${category.title} - Immagine ${index + 1}`} 
+              class="w-full h-auto object-cover transform group-hover:scale-[1.05] transition-transform duration-[1.5s] ease-out"
+              loading="lazy"
+              width={800}
+              height={600}
+              data-lightbox="true"
+            />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 pointer-events-none flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 transform scale-50 group-hover:scale-100 transition-all duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="w-full flex flex-col items-center justify-center py-32 text-center bg-primary border border-border/50">
+        <div class="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center mb-8 border border-accent/20">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-accent">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+        </div>
+        <h3 class="text-3xl font-heading font-bold text-text mb-4 tracking-tight">{t('category.gallery_updating')}</h3>
+        <p class="text-text/60 font-light text-lg">{t('category.gallery_desc')}</p>
+      </div>
+    )}
+  </section>
+</Layout>

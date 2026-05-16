@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Blocco bot IA di scraping non graditi
+User-agent: GPTBot
+Disallow: /
+User-agent: CCBot
+Disallow: /
+User-agent: anthropic-ai
+Disallow: /
+User-agent: Google-Extended
+Disallow: /
+
+Sitemap: https://www.megashoparredi.it/sitemap-index.xml

@@ -1,0 +1,142 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactFAB from '../components/ContactFAB.astro';
+import Lightbox from '../components/Lightbox.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { getLangFromUrl } from '../i18n/utils';
+import { languages, defaultLang } from '../i18n/ui';
+
+// Force reading the lang property or fallback to checking the URL
+const lang = getLangFromUrl(Astro.url);
+const { 
+  title, 
+  description = "Mega Shop Arredi: il tuo negozio di arredi e casalinghi ad Alessandria della Rocca (AG). Mobili, cucine, oggetti per la casa e design in provincia di Agrigento e zona Monti Sicani. Qualità 100% Made in Italy.",
+  noindex = false
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Helper to build alternate URLs
+const getAlternateUrl = (l: string) => {
+  const parts = Astro.url.pathname.split('/').filter(Boolean);
+  if (Object.keys(languages).includes(parts[0])) {
+    parts.shift();
+  }
+  const base = parts.join('/');
+  const newPath = l === defaultLang ? `/${base}` : `/${l}/${base}`;
+  return new URL(newPath.replace(/\/$/, '') || '/', Astro.site);
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo/icona_sito.png" />
+    <title>{title} | Mega Shop Arredi</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Multilingual SEO: hreflang tags -->
+    {Object.keys(languages).map((l) => (
+      <link rel="alternate" hreflang={l} href={getAlternateUrl(l)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={getAlternateUrl(defaultLang)} />
+    
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script is:inline type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FurnitureStore",
+        "name": "Mega Shop Arredi",
+        "description": "Arredamento completo per la tua casa, dal giorno alla notte. Cucine, divani, camere e molto altro.",
+        "url": "https://www.megashoparredi.it",
+        "logo": "https://www.megashoparredi.it/logo/icona_sito.png",
+        "image": "https://www.megashoparredi.it/logo/icona_sito.png",
+        "sameAs": [
+          "https://www.facebook.com/share/183wM2hUFu/",
+          "https://www.instagram.com/megashop_arredi",
+          "https://www.tiktok.com/@megashopdipuglia"
+        ],
+        "telephone": "+393312527613",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Via Nazionale, 4",
+          "addressLocality": "Alessandria della Rocca",
+          "postalCode": "92010",
+          "addressRegion": "AG",
+          "addressCountry": "IT"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "37.5685", 
+          "longitude": "13.4542"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "13:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "16:00",
+            "closes": "20:00"
+          }
+        ]
+      }
+    </script>
+    
+    <!-- Security: Content Security Policy -->
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://www.google.com/maps/; object-src 'none'; upgrade-insecure-requests;" />
+    
+    <!-- Open Graph / SEO (Secure & Optimized) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mega Shop Arredi" />
+    <meta property="og:title" content={title ? `${title} | Mega Shop Arredi` : "Mega Shop Arredi - Arredamento completo ad Alessandria della Rocca"} />
+    <meta property="og:description" content={description || "Mobili, Cucine, Divani e tutto per la casa dal giorno alla notte. Scopri le nostre collezioni online!"} />
+    <meta property="og:url" content={Astro.url} />
+    
+    <!-- HTTPS Enforced to prevent MITM (04_netsec, 02_basic_crypto) -->
+    <meta property="og:image" content={new URL('/images/logo_whatsapp.jpg', Astro.site)} />
+    <meta property="og:image:secure_url" content={new URL('/images/logo_whatsapp.jpg', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ? `${title} | Mega Shop Arredi` : "Mega Shop Arredi - Arredamento completo ad Alessandria della Rocca"} />
+    <meta name="twitter:description" content={description || "Mobili, Cucine, Divani e tutto per la casa dal giorno alla notte. Scopri le nostre collezioni online!"} />
+    <meta name="twitter:image" content={new URL('/images/logo_whatsapp.jpg', Astro.site)} />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Critical CSS Inlining for FCP -->
+    <style is:inline>
+      .hero-section { background: #000; min-height: 85vh; }
+      @media (min-width: 768px) { .hero-section { min-height: 100vh; } }
+      .hero-slide { opacity: 0; transition: opacity 2s ease-in-out; }
+      .hero-slide:first-child { opacity: 1; }
+    </style>
+  </head>
+  <body class="antialiased min-h-screen flex flex-col bg-primary text-text selection:bg-accent selection:text-white w-full max-w-full overflow-x-clip">
+    <Header />
+    <main class="flex-grow pb-24 overflow-x-clip">
+      <slot />
+    </main>
+    <Footer />
+    <ContactFAB />
+    <Lightbox />
+    <CookieBanner />
+  </body>
+</html>

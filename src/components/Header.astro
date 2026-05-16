@@ -1,0 +1,236 @@
+---
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../i18n/utils';
+import type { ui } from '../i18n/ui';
+import { Image } from 'astro:assets';
+import logoSito from '../assets/logo/logo_sito.png';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/', labelKey: 'nav.home' as keyof typeof ui['it'] },
+  { href: '/#collezioni', labelKey: 'nav.collezioni' as keyof typeof ui['it'] },
+  { href: '/chi-siamo', labelKey: 'nav.chisiamo' as keyof typeof ui['it'] },
+  { href: '/contatti', labelKey: 'nav.contatti' as keyof typeof ui['it'] },
+];
+
+const subMenuLinks = [
+  { href: '/collezioni/cucine', label: 'Cucine' },
+  { href: '/collezioni/divani', label: 'Divani' },
+  { href: '/collezioni/camere', label: 'Camere da Letto' },
+  { href: '/collezioni/camerette', label: 'Camerette' },
+  { href: '/collezioni/pareti', label: 'Pareti Attrezzate' },
+  { href: '/collezioni/sale', label: 'Sale' },
+  { href: '/collezioni/mobili_porta_tv', label: 'Mobili Porta TV' },
+  { href: '/collezioni/tavoli', label: 'Tavoli / Consolle / Tavolini' },
+  { href: '/collezioni/madie_contenitori', label: 'Madie & Contenitori' },
+  { href: '/collezioni/ufficio', label: 'Ufficio' },
+  { href: '/collezioni/librerie', label: 'Librerie' },
+  { href: '/collezioni/mobili_ingresso', label: 'Mobili Ingresso' },
+  { href: '/collezioni/scarpiere', label: 'Scarpiere & Multi-Uso' },
+  { href: '/collezioni/letto-contenitore', label: 'Letti Contenitore' },
+  { href: '/collezioni/arredo_giardino_contract_spiaggia', label: 'Arredo Giardino' },
+];
+---
+<header class="sticky top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-border/50 transition-colors duration-300 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 md:h-24 flex items-center justify-between relative w-full">
+    
+    <!-- Mobile Hamburger (Visual left on mobile) -->
+    <div class="flex items-center lg:hidden shrink-0">
+      <button class="text-text hover:text-accent-text transition-colors flex items-center p-1" aria-label="Menu" id="mobile-menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Desktop Logo (Visual left on desktop) -->
+    <a href={translatePath('/')} class="hidden md:flex items-center shrink-0 group">
+      <Image src={logoSito} alt="Mega Shop Arredi Logo" class="h-16 md:h-20 w-auto object-contain group-hover:scale-105 transition-all" loading="eager" fetchpriority="high" />
+    </a>
+    
+    <!-- Mobile Center Text (Absolute centered) -->
+    <a href={translatePath('/')} class="flex md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center shrink-0 z-10 w-fit max-w-[40%] text-center">
+      <span class="text-accent-text font-heading font-black text-[13px] sm:text-lg tracking-widest uppercase leading-tight drop-shadow-sm">MEGASHOP ARREDI</span>
+    </a>
+
+    <!-- Desktop Navigation (Center-Right on desktop) -->
+    <nav class="hidden lg:flex items-center gap-8">
+      {links.map((link) => {
+        const translatedHref = translatePath(link.href);
+        const isCollections = link.labelKey === 'nav.collezioni';
+        const isActive = !isCollections && (currentPath === translatedHref || (link.href !== '/' && currentPath.startsWith(translatedHref)));
+        
+        return isCollections ? (
+          <div class="relative group h-full py-8 flex items-center">
+            <a 
+              href={translatePath('/#collezioni')} 
+              class={`text-sm tracking-widest uppercase transition-colors hover:text-accent-text font-semibold flex items-center gap-1 ${
+                isActive ? 'text-accent' : 'text-text/80'
+              }`}
+            >
+              {t(link.labelKey)}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:-rotate-180 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+            
+            <!-- Mega Menu Dropdown -->
+            <div class="absolute top-24 left-1/2 -translate-x-1/2 w-[600px] bg-white border border-border/50 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top px-8 py-8 grid grid-cols-2 gap-x-12 gap-y-6">
+              {subMenuLinks.map(sub => (
+                <a href={translatePath(sub.href)} class="text-sm font-medium text-text/70 hover:text-accent-text hover:pl-2 transition-all uppercase tracking-wide flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-accent/50 opacity-0 transition-opacity"></div>
+                  {sub.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a 
+            href={translatedHref} 
+            class={`text-sm tracking-widest uppercase transition-colors hover:text-accent-text font-semibold py-8 ${
+              isActive ? 'text-accent' : 'text-text/80'
+            }`}
+          >
+            {t(link.labelKey)}
+          </a>
+        );
+      })}
+      
+      {/* Language Switcher */}
+      <div class="flex items-center gap-2 border-l border-border pl-6 text-sm font-semibold tracking-wide">
+        <a href="/" class={`transition-colors hover:text-accent-text ${lang === 'it' ? 'text-text' : 'text-text/75'}`}>IT</a>
+        <span class="text-border">|</span>
+        <a href="/en" class={`transition-colors hover:text-accent-text ${lang === 'en' ? 'text-text' : 'text-text/75'}`}>EN</a>
+      </div>
+    </nav>
+    
+    <!-- Mobile Right Logo (Visual right on mobile) -->
+    <a href={translatePath('/')} class="flex md:hidden items-center shrink-0 z-10 max-w-[45px]">
+      <Image src={logoSito} alt="Mega Shop Arredi Logo" class="h-7 w-auto object-contain" loading="eager" />
+    </a>
+
+    <!-- Desktop Chiamaci Button -->
+    <div class="hidden lg:flex items-center shrink-0">
+      <a href="tel:3312527613" class="inline-flex items-center justify-center bg-accent text-black px-8 py-3.5 hover:bg-black transition-colors duration-300 font-bold text-xs tracking-widest uppercase shadow-md whitespace-nowrap rounded-sm">
+        {t('nav.chiamaci')}
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay & Sidebar (Placed outside header to avoid coordinate issues with backdrop-blur) -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/60 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden backdrop-blur-sm"></div>
+<div id="mobile-menu" class="fixed inset-0 w-full h-screen bg-white z-[70] transform translate-x-full invisible transition-all duration-500 ease-in-out flex flex-col pt-8 px-6 lg:hidden overflow-y-auto">
+    <div class="flex items-center justify-between w-full mb-10">
+      {/* Language Switcher in Menu */}
+      <div class="flex items-center gap-2 text-base font-bold tracking-wide">
+        <a href="/" class={`transition-colors ${lang === 'it' ? 'text-accent' : 'text-text/75'}`}>IT</a>
+        <span class="text-border">|</span>
+        <a href="/en" class={`transition-colors ${lang === 'en' ? 'text-accent' : 'text-text/75'}`}>EN</a>
+      </div>
+      
+      <button id="close-menu-btn" class="text-text hover:text-accent-text transition-colors flex items-center justify-center p-2">
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 flex flex-col items-center justify-center pb-12">
+      <nav class="flex flex-col items-center text-center w-full px-4">
+        {links.map((link) => {
+          const isCollections = link.labelKey === 'nav.collezioni';
+          const translatedHref = isCollections ? '/#collezioni' : translatePath(link.href);
+          
+          return isCollections ? (
+            <div class="w-full flex flex-col items-center mb-6">
+              <div class="flex items-center justify-center gap-2 cursor-pointer group" id="mobile-collections-toggle">
+                <a href={translatedHref} class="text-2xl font-bold text-text group-hover:text-accent-text uppercase tracking-widest transition-colors">
+                  {t(link.labelKey)}
+                </a>
+                <button class="p-2 text-text group-hover:text-accent-text transition-transform duration-300" id="mobile-collections-icon" aria-label="Espandi Collezioni">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+              
+              <div id="mobile-collections-menu" class="overflow-hidden transition-all duration-300 max-h-0 flex flex-col items-center mt-0 opacity-0">
+                {subMenuLinks.map(sub => (
+                  <a href={translatePath(sub.href)} class="py-3 text-lg font-medium text-text/70 hover:text-accent-text uppercase tracking-wide transition-colors whitespace-nowrap">
+                    {sub.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a href={translatedHref} class="text-2xl font-bold mb-6 text-text hover:text-accent-text uppercase tracking-widest transition-colors">
+              {t(link.labelKey)}
+            </a>
+          );
+        })}
+      </nav>
+      
+      <a href="tel:3312527613" class="bg-accent text-black text-center px-8 py-4 mt-8 font-bold uppercase tracking-widest text-sm hover:bg-black transition-colors rounded-sm shadow-md">
+        {t('nav.chiamaci')}
+      </a>
+    </div>
+  </div>
+</header>
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const closeBtn = document.getElementById('close-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('mobile-menu-overlay');
+
+  if(btn && menu && closeBtn && overlay) {
+    const openMenu = () => {
+      menu.classList.remove('invisible');
+      requestAnimationFrame(() => {
+        menu.classList.remove('translate-x-full');
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = 'hidden';
+      });
+    };
+
+    const closeMenu = () => {
+      menu.classList.add('translate-x-full');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        menu.classList.add('invisible');
+      }, 500);
+    };
+
+    btn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+  }
+
+  const colToggle = document.getElementById('mobile-collections-toggle');
+  const colIcon = document.getElementById('mobile-collections-icon');
+  const colMenu = document.getElementById('mobile-collections-menu');
+
+  if(colToggle && colIcon && colMenu) {
+    colToggle.addEventListener('click', (e) => {
+      // Se si clicca ESATTAMENTE sull'icona non andiamo al link, apriamo l'accordion
+      if ((e.target as Element).closest('button')) {
+        e.preventDefault();
+      }
+      
+      const isOpen = !colMenu.classList.contains('max-h-0');
+      if (!isOpen) {
+        colMenu.classList.remove('max-h-0', 'opacity-0', 'mt-0');
+        colMenu.classList.add('max-h-[800px]', 'opacity-100', 'mt-4');
+        colIcon.classList.add('-rotate-180');
+      } else {
+        colMenu.classList.add('max-h-0', 'opacity-0', 'mt-0');
+        colMenu.classList.remove('max-h-[800px]', 'opacity-100', 'mt-4');
+        colIcon.classList.remove('-rotate-180');
+      }
+    });
+  }
+</script>

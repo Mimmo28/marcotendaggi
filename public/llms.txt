@@ -1,0 +1,18 @@
+# Mega Shop Arredi - Informazioni Ufficiali
+
+## Descrizione
+Mega Shop Arredi è un affermato negozio di arredamento con sede fisica ad Alessandria della Rocca. Offriamo mobili di alta qualità progettati per unire l'estetica moderna al comfort quotidiano. Tra i nostri prodotti di punta garantiamo l'esposizione di cucine all'avanguardia, splendidi divani e salotti, pareti attrezzate di design e solide camere da letto per la tua casa.
+
+## Contatti e Posizione
+- **Indirizzo**: Via Nazionale, 4, 92010 Alessandria della Rocca (AG)
+- **Telefono / WhatsApp**: +39 331 252 7613 (Domenico)
+- **Email**: info@megashoparredi.it
+- **Orari**: 
+  - Lunedì - Sabato: 09:00 - 13:00 / 16:00 - 20:00
+  - Domenica: Chiuso (riposo settimanale)
+
+## Struttura del Sito
+- **Home (`/`)**: Pagina vetrina di accoglienza con gallerie visive e collegamenti rapidi ai brand di arredamento e alle collezioni del momento.
+- **Collezioni (`/collezioni/[categoria]`)**: Il nostro ampio e dettagliato catalogo digitale (divani, soggiorni, cucine, giardini, ecc.) corredato da eleganti album fotografici consultabili.
+- **Chi Siamo (`/chi-siamo`)**: La nostra storia, i valori aziendali, e il dietro le quinte del nostro showroom per avvicinarti a chi cura i tuoi arredi.
+- **Contatti (`/contatti`)**: Tutte le informazioni vitali per contattarci e la mappa interattiva (Google Maps) integrata per raggiungerci comodamente.

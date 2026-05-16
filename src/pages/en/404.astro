@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+<Layout title={t('404.title')} noindex={true}>
+  <div class="min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
+    <h1 class="text-9xl font-heading font-bold text-accent-text mb-4">404</h1>
+    <h2 class="text-3xl font-heading font-semibold text-text mb-6">{t('404.subtitle')}</h2>
+    <p class="text-text/70 mb-10 max-w-md mx-auto text-lg font-light leading-relaxed">
+      {t('404.description')}
+    </p>
+    <a href={translatePath('/')} class="bg-accent text-white px-8 py-4 rounded-none font-medium uppercase tracking-widest hover:bg-accent-text hover:scale-105 transition-all duration-300 shadow-xl shadow-accent/20">
+      {t('404.back')}
+    </a>
+  </div>
+</Layout>

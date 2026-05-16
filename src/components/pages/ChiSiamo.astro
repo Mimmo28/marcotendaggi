@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { Image } from 'astro:assets';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const allImages = import.meta.glob('../../assets/images/**/*.{jpeg,jpg,png,webp}', { eager: true });
+const getCoverForCategory = (folderName: string) => {
+  const path = Object.keys(allImages).find(path => path.includes(`/assets/images/${folderName}/`));
+  return path ? (allImages[path] as any).default : null;
+};
+
+const image1 = getCoverForCategory('cucine');
+const image2 = getCoverForCategory('divani');
+---
+<Layout title={t('nav.chisiamo')} description="Scopri Mega Shop Arredi: mobili, cucine e casalinghi ad Alessandria della Rocca (AG). Punto di riferimento per tutta la provincia di Agrigento, zona Monti Sicani e la Sicilia.">
+  <!-- Immersive Header -->
+  <section class="relative h-[60vh] min-h-[500px] w-full bg-black flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 w-full h-full opacity-60">
+      {image1 && <Image src={image1} alt={t('about.badge')} class="w-full h-full object-cover object-center scale-105 animate-[subtleZoom_20s_ease-in-out_infinite_alternate]" width={1920} height={800} loading="eager" />}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+    </div>
+    
+    <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto mt-16">
+      <span class="block text-sm tracking-[0.4em] text-accent-text font-bold uppercase mb-6 drop-shadow-md">{t('about.badge')}</span>
+      <h1 class="text-5xl md:text-7xl font-bold font-heading mb-6 text-white drop-shadow-lg leading-tight tracking-tight">{t('about.title')}</h1>
+      <p class="text-xl font-light text-white/90 leading-relaxed drop-shadow-md">
+        {t('about.subtitle')}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-32 px-6 max-w-7xl mx-auto overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div class="space-y-8 text-text/80 font-light leading-relaxed text-lg">
+        <h2 class="text-4xl md:text-5xl font-heading font-bold text-text mb-12 tracking-tight">{t('about.who')} <span class="text-accent-text">Megashop Arredi</span></h2>
+        
+        <p class="border-l-4 border-accent pl-6 italic text-text/90 font-serif text-xl border-l-4">
+          {t('about.quote')}
+        </p>
+        
+        <p>
+          {t('about.p1')}
+        </p>
+        <p>
+          {t('about.p2')}
+        </p>
+        <p>
+          {t('about.p3')}
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-6 relative">
+        <div class="absolute -inset-4 bg-accent/5 -z-10 transform rotate-3"></div>
+        <div class="aspect-[4/5] overflow-hidden shadow-2xl group">
+          {image1 && <Image src={image1} alt={t('about.img1')} class="w-full h-full object-cover group-hover:scale-105 transition-all duration-[1.5s] ease-out" width={600} height={800} />}
+        </div>
+        <div class="aspect-[4/5] overflow-hidden shadow-2xl mt-16 group">
+          {image2 && <Image src={image2} alt={t('about.img2')} class="w-full h-full object-cover group-hover:scale-105 transition-all duration-[1.5s] ease-out" width={600} height={800} />}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+<style>
+  @keyframes subtleZoom {
+    0% { transform: scale(1.02); }
+    100% { transform: scale(1.10); }
+  }
+</style>

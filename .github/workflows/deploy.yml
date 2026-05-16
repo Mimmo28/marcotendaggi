@@ -1,0 +1,41 @@
+name: 🚀 Deploy Mega Shop Arredi
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🏗️ Build & Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      # --- AGGIUNTO QUESTO PASSAGGIO PER FIXARE L'ERRORE ---
+      - name: 🟢 Setup Node.js (Version 22)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm' # Velocizza i prossimi caricamenti
+      # ---------------------------------------------------
+
+      - name: 🛠️ Install dependencies
+        run: npm install
+
+      - name: 🏗️ Build Project
+        run: npm run build
+
+      - name: 🔐 Security Audit (Check for vulnerabilities)
+        run: npm audit --audit-level=high
+
+      - name: 📂 Sync files to cPanel via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          local-dir: ./dist/
+          server-dir: ./
+          protocol: ftps

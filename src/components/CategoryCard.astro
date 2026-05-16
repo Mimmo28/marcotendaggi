@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  title: string;
+  slug: string;
+  imagePath: any; // Astro image object
+}
+
+const { title, slug, imagePath } = Astro.props;
+---
+<a href={`/collezioni/${slug}`} class="group block relative overflow-hidden rounded-sm bg-white border border-border/40 hover:border-transparent hover:shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]">
+  <div class="aspect-[4/5] w-full bg-border/20 overflow-hidden relative">
+    {imagePath ? (
+      <Image 
+        src={imagePath} 
+        alt={`Collezione ${title}`} 
+        class="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-[1.2s] ease-out"
+        loading="lazy"
+        width={500}
+        height={625}
+      />
+    ) : (
+      <div class="w-full h-full bg-border/20 flex items-center justify-center">
+         <span class="text-text/20 uppercase tracking-widest text-xs">{title}</span>
+      </div>
+    )}
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+  </div>
+  
+  <div class="absolute inset-0 p-8 flex flex-col justify-end text-white text-center">
+    <h3 class="text-2xl md:text-3xl font-heading font-bold mb-4 drop-shadow-lg transform translate-y-4 group-hover:-translate-y-2 transition-transform duration-500 ease-out">{title}</h3>
+    
+    <div class="overflow-hidden">
+      <span class="inline-flex items-center justify-center gap-3 text-sm font-bold tracking-widest uppercase opacity-0 transform translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100 text-accent-text group-hover:text-white bg-white/10 backdrop-blur-sm px-6 py-3 rounded-none border border-white/20">
+        Scopri la Collezione
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </span>
+    </div>
+  </div>
+</a>
