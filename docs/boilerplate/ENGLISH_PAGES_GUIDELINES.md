@@ -1,6 +1,6 @@
 # English Pages & Translation Guidelines
 
-Per garantire un'esperienza utente professionale e coerente su `megashoparredi.it`, è essenziale che la versione inglese sia sempre lo specchio fedele di quella italiana.
+Per garantire un'esperienza utente professionale e coerente su `marcotendaggi.it`, è essenziale che la versione inglese sia sempre lo specchio fedele di quella italiana.
 
 ## 1. Struttura delle Directory e File
 Il sito utilizza un sistema di routing multilingua basato su subdirectory:

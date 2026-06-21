@@ -4,9 +4,9 @@ import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/u
 
 export function getStaticPaths() {
   const brands = [
-    { name: "Catilan Soggiorni", slug: "catilan_soggiorni", description: "Mobili Catilan Soggiorni a Alessandria della Rocca (AG). L'espressività del legno e il design italiano per il tuo living con Mega Shop Arredi." },
-    { name: "Divancasa", slug: "divancasa", description: "Divani Divancasa a Alessandria della Rocca. Comfort assoluto e artigianalità per i tuoi salotti presso Mega Shop Arredi ad Agrigento." },
-    { name: "Proxima Mobili", slug: "proxima_mobili", description: "Design innovativo Proxima Mobili a Alessandria della Rocca (AG). Linee essenziali per arredare con carattere la tua casa in Sicilia." }
+    { name: "Tendaggi Classici", slug: "catilan_soggiorni", description: "Tende classiche e drappeggi eleganti per ambienti raffinati. Tessuti pregiati e confezione artigianale su misura da Marco Tendaggi a Ribera (AG)." },
+    { name: "Tende Moderne", slug: "divancasa", description: "Linee pulite e tessuti contemporanei per tende da interno di design. Soluzioni moderne con posa professionale in tutta la provincia di Agrigento." },
+    { name: "Esterno e Giardino", slug: "proxima_mobili", description: "Tende da sole, pergole e protezioni per esterni. Materiali resistenti alle intemperie e soluzioni estetiche per terrazze e giardini a Ribera." }
   ];
 
   return brands.map(brand => ({

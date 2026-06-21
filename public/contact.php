@@ -7,9 +7,9 @@
 session_start();
 
 // Configurazione
-$recipient = "info@megashoparredi.it"; // Email di destinazione reale
-$sender_email = "noreply@megashoparredi.it"; // Deve appartenere al dominio per SPF/DKIM
-$site_name = "Mega Shop Arredi";
+$recipient = "info@marcotendaggi.it"; // Email di destinazione reale
+$sender_email = "noreply@marcotendaggi.it"; // Deve appartenere al dominio per SPF/DKIM
+$site_name = "Marco Tendaggi";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     

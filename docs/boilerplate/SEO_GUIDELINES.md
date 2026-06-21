@@ -1,6 +1,6 @@
 # SEO & Multilingual Guidelines
 
-Questo documento serve come riferimento per mantenere l'ottimizzazione SEO e la corretta indicizzazione del sito `megashoparredi.it`.
+Questo documento serve come riferimento per mantenere l'ottimizzazione SEO e la corretta indicizzazione del sito `marcotendaggi.it`.
 
 ## 1. Gestione Multilingua (Tag `hreflang`)
 Il sistema è configurato per gestire i tag `hreflang` in modo **automatico** all'interno del componente `Layout.astro`.

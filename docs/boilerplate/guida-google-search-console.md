@@ -1,13 +1,13 @@
 # Guida Google Search Console (GSC)
 
-Questa guida spiega come indicizzare correttamente il tuo sito su Google dopo averlo pubblicato.
+Da eseguire **dopo il primo deploy** su `www.marcotendaggi.it`.
 
 ## 1. Verifica Proprietà del Dominio
 Google deve essere sicuro che il sito sia tuo.
 
 1. Vai su [Google Search Console](https://search.google.com/search-console).
 2. Clicca sul selettore di proprietà in alto a sinistra e scegli **"Aggiungi proprietà"**.
-3. Scegli l'opzione **"Dominio"** (quella a sinistra). Inserisci il tuo dominio (es. `megashoparredi.it`).
+3. Scegli l'opzione **"Dominio"** (quella a sinistra). Inserisci il tuo dominio (es. `marcotendaggi.it`).
 4. **Copia il record TXT** che ti fornisce Google.
 5. Vai nel pannello di gestione del tuo DNS.
    - **Su cPanel**: Cerca l'icona **"Zone Editor"** (o "Editor di zona") nella sezione **Domini**. Clicca su **"Gestisci"** (Manage) accanto al tuo dominio, poi su **"Aggiungi Record"** e scegli il tipo **TXT**.

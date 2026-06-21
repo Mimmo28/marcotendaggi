@@ -2,7 +2,7 @@
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '../i18n/utils';
 import type { ui } from '../i18n/ui';
 import { Image } from 'astro:assets';
-import logoSito from '../assets/logo/logo_sito.png';
+import logoSito from '../assets/logo/logo-marco-tendaggi.png';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -17,71 +17,57 @@ const links = [
 ];
 
 const subMenuLinks = [
-  { href: '/collezioni/cucine', label: 'Cucine' },
-  { href: '/collezioni/divani', label: 'Divani' },
-  { href: '/collezioni/camere', label: 'Camere da Letto' },
-  { href: '/collezioni/camerette', label: 'Camerette' },
-  { href: '/collezioni/pareti', label: 'Pareti Attrezzate' },
-  { href: '/collezioni/sale', label: 'Sale' },
-  { href: '/collezioni/mobili_porta_tv', label: 'Mobili Porta TV' },
-  { href: '/collezioni/tavoli', label: 'Tavoli / Consolle / Tavolini' },
-  { href: '/collezioni/madie_contenitori', label: 'Madie & Contenitori' },
-  { href: '/collezioni/ufficio', label: 'Ufficio' },
-  { href: '/collezioni/librerie', label: 'Librerie' },
-  { href: '/collezioni/mobili_ingresso', label: 'Mobili Ingresso' },
-  { href: '/collezioni/scarpiere', label: 'Scarpiere & Multi-Uso' },
-  { href: '/collezioni/letto-contenitore', label: 'Letti Contenitore' },
-  { href: '/collezioni/arredo_giardino_contract_spiaggia', label: 'Arredo Giardino' },
+  { href: '/collezioni/tende-interno', label: 'Tende da Interno' },
+  { href: '/collezioni/tende-misura', label: 'Tende su Misura' },
+  { href: '/collezioni/tessuti', label: 'Tessuti Pregiati' },
+  { href: '/collezioni/binari', label: 'Binari & Accessori' },
+  { href: '/collezioni/tende-rullo', label: 'Tende a Rullo' },
+  { href: '/collezioni/veneziane', label: 'Veneziane & Pannelli' },
+  { href: '/collezioni/devore', label: 'Devorè' },
+  { href: '/collezioni/jeorgette-seta', label: 'Jeorgette in Seta' },
+  { href: '/collezioni/jeorgette-calata', label: 'Jeorgette Calata o Velluto' },
+  { href: '/collezioni/misto-lino', label: 'Misto Lino' },
+  { href: '/collezioni/oceania', label: 'Oceania' },
 ];
 ---
-<header class="sticky top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-border/50 transition-colors duration-300 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 md:h-24 flex items-center justify-between relative w-full">
-    
-    <!-- Mobile Hamburger (Visual left on mobile) -->
-    <div class="flex items-center lg:hidden shrink-0">
-      <button class="text-text hover:text-accent-text transition-colors flex items-center p-1" aria-label="Menu" id="mobile-menu-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
 
-    <!-- Desktop Logo (Visual left on desktop) -->
-    <a href={translatePath('/')} class="hidden md:flex items-center shrink-0 group">
-      <Image src={logoSito} alt="Mega Shop Arredi Logo" class="h-16 md:h-20 w-auto object-contain group-hover:scale-105 transition-all" loading="eager" fetchpriority="high" />
-    </a>
+<!-- Header stile Colombo: sfondo sabbia, logo sinistra, nav centro, pill CTA destra -->
+<header id="site-header" class="sticky top-0 z-50 bg-primary/90 backdrop-blur-md border-b border-border/60 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 h-18 md:h-20 flex items-center justify-between gap-6">
     
-    <!-- Mobile Center Text (Absolute centered) -->
-    <a href={translatePath('/')} class="flex md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center shrink-0 z-10 w-fit max-w-[40%] text-center">
-      <span class="text-accent-text font-heading font-black text-[13px] sm:text-lg tracking-widest uppercase leading-tight drop-shadow-sm">MEGASHOP ARREDI</span>
+    <!-- Logo -->
+    <a href={translatePath('/')} class="shrink-0 group">
+      <Image 
+        src={logoSito} 
+        alt="Marco Tendaggi" 
+        class="h-12 md:h-14 w-auto object-contain group-hover:opacity-80 transition-opacity duration-300" 
+        loading="eager" 
+        fetchpriority="high" 
+      />
     </a>
 
-    <!-- Desktop Navigation (Center-Right on desktop) -->
-    <nav class="hidden lg:flex items-center gap-8">
+    <!-- Desktop Nav (centro) -->
+    <nav class="hidden lg:flex items-center gap-7 flex-1 justify-center">
       {links.map((link) => {
         const translatedHref = translatePath(link.href);
         const isCollections = link.labelKey === 'nav.collezioni';
         const isActive = !isCollections && (currentPath === translatedHref || (link.href !== '/' && currentPath.startsWith(translatedHref)));
         
         return isCollections ? (
-          <div class="relative group h-full py-8 flex items-center">
+          <div class="relative group flex items-center h-20">
             <a 
               href={translatePath('/#collezioni')} 
-              class={`text-sm tracking-widest uppercase transition-colors hover:text-accent-text font-semibold flex items-center gap-1 ${
-                isActive ? 'text-accent' : 'text-text/80'
-              }`}
+              class={`text-sm font-medium transition-colors hover:text-accent-text flex items-center gap-1 ${isActive ? 'text-accent-text' : 'text-text/75'}`}
             >
               {t(link.labelKey)}
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:-rotate-180 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 transform group-hover:-rotate-180 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </a>
-            
-            <!-- Mega Menu Dropdown -->
-            <div class="absolute top-24 left-1/2 -translate-x-1/2 w-[600px] bg-white border border-border/50 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top px-8 py-8 grid grid-cols-2 gap-x-12 gap-y-6">
+            <!-- Dropdown -->
+            <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[440px] bg-surface border border-border shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 origin-top p-6 grid grid-cols-2 gap-3 rounded-xl">
               {subMenuLinks.map(sub => (
-                <a href={translatePath(sub.href)} class="text-sm font-medium text-text/70 hover:text-accent-text hover:pl-2 transition-all uppercase tracking-wide flex items-center gap-2">
-                  <div class="w-1.5 h-1.5 rounded-full bg-accent/50 opacity-0 transition-opacity"></div>
+                <a href={translatePath(sub.href)} class="text-sm text-text/65 hover:text-accent-text transition-colors py-2 px-3 rounded-lg hover:bg-primary/50">
                   {sub.label}
                 </a>
               ))}
@@ -90,121 +76,115 @@ const subMenuLinks = [
         ) : (
           <a 
             href={translatedHref} 
-            class={`text-sm tracking-widest uppercase transition-colors hover:text-accent-text font-semibold py-8 ${
-              isActive ? 'text-accent' : 'text-text/80'
-            }`}
+            class={`text-sm font-medium transition-colors hover:text-accent-text ${isActive ? 'text-accent-text' : 'text-text/75'}`}
           >
             {t(link.labelKey)}
           </a>
         );
       })}
-      
-      {/* Language Switcher */}
-      <div class="flex items-center gap-2 border-l border-border pl-6 text-sm font-semibold tracking-wide">
-        <a href="/" class={`transition-colors hover:text-accent-text ${lang === 'it' ? 'text-text' : 'text-text/75'}`}>IT</a>
-        <span class="text-border">|</span>
-        <a href="/en" class={`transition-colors hover:text-accent-text ${lang === 'en' ? 'text-text' : 'text-text/75'}`}>EN</a>
+
+      <!-- Lang -->
+      <div class="flex items-center gap-1.5 text-xs font-semibold text-text/50">
+        <a href="/" class={`hover:text-accent-text transition-colors ${lang === 'it' ? 'text-accent-text' : ''}`}>IT</a>
+        <span>/</span>
+        <a href="/en" class={`hover:text-accent-text transition-colors ${lang === 'en' ? 'text-accent-text' : ''}`}>EN</a>
       </div>
     </nav>
-    
-    <!-- Mobile Right Logo (Visual right on mobile) -->
-    <a href={translatePath('/')} class="flex md:hidden items-center shrink-0 z-10 max-w-[45px]">
-      <Image src={logoSito} alt="Mega Shop Arredi Logo" class="h-7 w-auto object-contain" loading="eager" />
-    </a>
 
-    <!-- Desktop Chiamaci Button -->
+    <!-- CTA pill (destra) -->
     <div class="hidden lg:flex items-center shrink-0">
-      <a href="tel:3312527613" class="inline-flex items-center justify-center bg-accent text-black px-8 py-3.5 hover:bg-black transition-colors duration-300 font-bold text-xs tracking-widest uppercase shadow-md whitespace-nowrap rounded-sm">
+      <a href="/contatti" class="btn-pill text-sm whitespace-nowrap">
         {t('nav.chiamaci')}
       </a>
     </div>
+
+    <!-- Mobile: hamburger -->
+    <button class="lg:hidden p-2 text-text hover:text-accent-text transition-colors" aria-label="Menu" id="mobile-menu-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
   </div>
 </header>
 
-<!-- Mobile Menu Overlay & Sidebar (Placed outside header to avoid coordinate issues with backdrop-blur) -->
-<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/60 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden backdrop-blur-sm"></div>
-<div id="mobile-menu" class="fixed inset-0 w-full h-screen bg-white z-[70] transform translate-x-full invisible transition-all duration-500 ease-in-out flex flex-col pt-8 px-6 lg:hidden overflow-y-auto">
-    <div class="flex items-center justify-between w-full mb-10">
-      {/* Language Switcher in Menu */}
-      <div class="flex items-center gap-2 text-base font-bold tracking-wide">
-        <a href="/" class={`transition-colors ${lang === 'it' ? 'text-accent' : 'text-text/75'}`}>IT</a>
-        <span class="text-border">|</span>
-        <a href="/en" class={`transition-colors ${lang === 'en' ? 'text-accent' : 'text-text/75'}`}>EN</a>
-      </div>
+<!-- Mobile Menu -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+<div id="mobile-menu" class="fixed inset-y-0 left-0 w-[85%] max-w-sm bg-surface z-[70] transform -translate-x-full invisible transition-all duration-400 ease-in-out flex flex-col pt-6 px-6 lg:hidden overflow-y-auto shadow-2xl">
+  <div class="flex items-center justify-between mb-10">
+    <Image src={logoSito} alt="Marco Tendaggi" class="h-10 w-auto object-contain" loading="eager" />
+    <button id="close-menu-btn" aria-label="Chiudi menu" class="p-2 text-text hover:text-accent-text transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  
+  <nav class="flex flex-col gap-1 flex-1">
+    {links.map((link) => {
+      const isCollections = link.labelKey === 'nav.collezioni';
+      const translatedHref = isCollections ? '/#collezioni' : translatePath(link.href);
       
-      <button id="close-menu-btn" class="text-text hover:text-accent-text transition-colors flex items-center justify-center p-2">
-         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-    
-    <div class="flex-1 flex flex-col items-center justify-center pb-12">
-      <nav class="flex flex-col items-center text-center w-full px-4">
-        {links.map((link) => {
-          const isCollections = link.labelKey === 'nav.collezioni';
-          const translatedHref = isCollections ? '/#collezioni' : translatePath(link.href);
-          
-          return isCollections ? (
-            <div class="w-full flex flex-col items-center mb-6">
-              <div class="flex items-center justify-center gap-2 cursor-pointer group" id="mobile-collections-toggle">
-                <a href={translatedHref} class="text-2xl font-bold text-text group-hover:text-accent-text uppercase tracking-widest transition-colors">
-                  {t(link.labelKey)}
-                </a>
-                <button class="p-2 text-text group-hover:text-accent-text transition-transform duration-300" id="mobile-collections-icon" aria-label="Espandi Collezioni">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              </div>
-              
-              <div id="mobile-collections-menu" class="overflow-hidden transition-all duration-300 max-h-0 flex flex-col items-center mt-0 opacity-0">
-                {subMenuLinks.map(sub => (
-                  <a href={translatePath(sub.href)} class="py-3 text-lg font-medium text-text/70 hover:text-accent-text uppercase tracking-wide transition-colors whitespace-nowrap">
-                    {sub.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <a href={translatedHref} class="text-2xl font-bold mb-6 text-text hover:text-accent-text uppercase tracking-widest transition-colors">
+      return isCollections ? (
+        <div class="flex flex-col">
+          <div class="flex items-center justify-between" id="mobile-collections-toggle">
+            <a href={translatedHref} class="text-lg font-medium text-text py-3 hover:text-accent-text transition-colors">
               {t(link.labelKey)}
             </a>
-          );
-        })}
-      </nav>
-      
-      <a href="tel:3312527613" class="bg-accent text-black text-center px-8 py-4 mt-8 font-bold uppercase tracking-widest text-sm hover:bg-black transition-colors rounded-sm shadow-md">
-        {t('nav.chiamaci')}
-      </a>
+            <button id="mobile-collections-icon" class="p-2" aria-label="Espandi">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-text/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          <div id="mobile-collections-menu" class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 pl-4">
+            {subMenuLinks.map(sub => (
+              <a href={translatePath(sub.href)} class="block text-sm text-text/60 py-2 hover:text-accent-text transition-colors border-l border-border/50 pl-4">
+                {sub.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <a href={translatedHref} class="text-lg font-medium text-text py-3 border-b border-border/30 hover:text-accent-text transition-colors">
+          {t(link.labelKey)}
+        </a>
+      );
+    })}
+  </nav>
+
+  <div class="py-8 flex flex-col gap-4">
+    <a href="/contatti" class="btn-pill text-center">
+      {t('nav.chiamaci')}
+    </a>
+    <div class="flex items-center justify-center gap-3 text-sm text-text/50">
+      <a href="/" class={lang === 'it' ? 'text-accent-text font-semibold' : ''}>IT</a>
+      <span>/</span>
+      <a href="/en" class={lang === 'en' ? 'text-accent-text font-semibold' : ''}>EN</a>
     </div>
   </div>
-</header>
+</div>
+
 <script>
   const btn = document.getElementById('mobile-menu-btn');
   const closeBtn = document.getElementById('close-menu-btn');
   const menu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('mobile-menu-overlay');
 
-  if(btn && menu && closeBtn && overlay) {
+  if (btn && menu && closeBtn && overlay) {
     const openMenu = () => {
       menu.classList.remove('invisible');
       requestAnimationFrame(() => {
-        menu.classList.remove('translate-x-full');
+        menu.classList.remove('-translate-x-full');
         overlay.classList.remove('opacity-0', 'pointer-events-none');
         document.body.style.overflow = 'hidden';
       });
     };
-
     const closeMenu = () => {
-      menu.classList.add('translate-x-full');
+      menu.classList.add('-translate-x-full');
       overlay.classList.add('opacity-0', 'pointer-events-none');
       document.body.style.overflow = '';
-      setTimeout(() => {
-        menu.classList.add('invisible');
-      }, 500);
+      setTimeout(() => menu.classList.add('invisible'), 400);
     };
-
     btn.addEventListener('click', openMenu);
     closeBtn.addEventListener('click', closeMenu);
     overlay.addEventListener('click', closeMenu);
@@ -214,22 +194,18 @@ const subMenuLinks = [
   const colIcon = document.getElementById('mobile-collections-icon');
   const colMenu = document.getElementById('mobile-collections-menu');
 
-  if(colToggle && colIcon && colMenu) {
+  if (colToggle && colIcon && colMenu) {
     colToggle.addEventListener('click', (e) => {
-      // Se si clicca ESATTAMENTE sull'icona non andiamo al link, apriamo l'accordion
-      if ((e.target as Element).closest('button')) {
-        e.preventDefault();
-      }
-      
+      if ((e.target as Element).closest('button')) e.preventDefault();
       const isOpen = !colMenu.classList.contains('max-h-0');
       if (!isOpen) {
-        colMenu.classList.remove('max-h-0', 'opacity-0', 'mt-0');
-        colMenu.classList.add('max-h-[800px]', 'opacity-100', 'mt-4');
-        colIcon.classList.add('-rotate-180');
+        colMenu.classList.remove('max-h-0', 'opacity-0');
+        colMenu.classList.add('max-h-[400px]', 'opacity-100', 'mt-1', 'mb-3');
+        colIcon.classList.add('rotate-180');
       } else {
-        colMenu.classList.add('max-h-0', 'opacity-0', 'mt-0');
-        colMenu.classList.remove('max-h-[800px]', 'opacity-100', 'mt-4');
-        colIcon.classList.remove('-rotate-180');
+        colMenu.classList.add('max-h-0', 'opacity-0');
+        colMenu.classList.remove('max-h-[400px]', 'opacity-100', 'mt-1', 'mb-3');
+        colIcon.classList.remove('rotate-180');
       }
     });
   }

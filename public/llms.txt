@@ -1,18 +1,22 @@
-# Mega Shop Arredi - Informazioni Ufficiali
+# Marco Tendaggi - Informazioni Ufficiali
 
 ## Descrizione
-Mega Shop Arredi è un affermato negozio di arredamento con sede fisica ad Alessandria della Rocca. Offriamo mobili di alta qualità progettati per unire l'estetica moderna al comfort quotidiano. Tra i nostri prodotti di punta garantiamo l'esposizione di cucine all'avanguardia, splendidi divani e salotti, pareti attrezzate di design e solide camere da letto per la tua casa.
+Marco Tendaggi è un'attività specializzata in tendaggi, tessuti pregiati e binari su misura con sede e showroom a Ribera (AG). Offriamo tende da interno, tende da esterno, veneziane, tende a rullo, tessuti di qualità e tutti gli accessori per l'arredamento tessile della casa. Preventivi gratuiti in tutta Italia.
 
 ## Contatti e Posizione
-- **Indirizzo**: Via Nazionale, 4, 92010 Alessandria della Rocca (AG)
-- **Telefono / WhatsApp**: +39 331 252 7613 (Domenico)
-- **Email**: info@megashoparredi.it
+- **Indirizzo**: Via Canova 15 (il cangurotto), 92016 Ribera (AG)
+- **Telefono / WhatsApp**: +39 328 732 3742
+- **Email**: info@marcotendaggi.it
 - **Orari**: 
   - Lunedì - Sabato: 09:00 - 13:00 / 16:00 - 20:00
-  - Domenica: Chiuso (riposo settimanale)
+  - Domenica: Chiuso
+
+## Mercati Settimanali
+- Porto Empedocle — ogni Giovedì
+- Favara — ogni Venerdì
 
 ## Struttura del Sito
-- **Home (`/`)**: Pagina vetrina di accoglienza con gallerie visive e collegamenti rapidi ai brand di arredamento e alle collezioni del momento.
-- **Collezioni (`/collezioni/[categoria]`)**: Il nostro ampio e dettagliato catalogo digitale (divani, soggiorni, cucine, giardini, ecc.) corredato da eleganti album fotografici consultabili.
-- **Chi Siamo (`/chi-siamo`)**: La nostra storia, i valori aziendali, e il dietro le quinte del nostro showroom per avvicinarti a chi cura i tuoi arredi.
-- **Contatti (`/contatti`)**: Tutte le informazioni vitali per contattarci e la mappa interattiva (Google Maps) integrata per raggiungerci comodamente.
+- **Home (`/`)**: Pagina vetrina di accoglienza con gallerie visive e collegamento rapido alle collezioni di tendaggi.
+- **Collezioni (`/collezioni/[categoria]`)**: Il nostro catalogo digitale (tende da interno, tende da esterno, tessuti, binari, tende a rullo, veneziane) con gallerie fotografiche.
+- **Chi Siamo (`/chi-siamo`)**: La storia di Marco Tendaggi, i valori artigianali e il nostro showroom a Ribera.
+- **Contatti (`/contatti`)**: Tutte le informazioni per contattarci, con mappa interattiva per raggiungerci.

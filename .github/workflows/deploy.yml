@@ -1,4 +1,4 @@
-name: 🚀 Deploy Mega Shop Arredi
+name: 🚀 Deploy Marco Tendaggi
 on:
   push:
     branches:
@@ -12,24 +12,26 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      # --- AGGIUNTO QUESTO PASSAGGIO PER FIXARE L'ERRORE ---
-      - name: 🟢 Setup Node.js (Version 22)
+      - name: 🟢 Setup Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm' # Velocizza i prossimi caricamenti
-      # ---------------------------------------------------
+          cache: 'npm'
 
-      - name: 🛠️ Install dependencies
-        run: npm install
+      - name: 🛠️ Install dependencies (reproducible)
+        # npm ci: installa ESATTAMENTE le versioni in package-lock.json
+        # Non altera mai il lock file — build deterministici e sicuri
+        run: npm ci
+
+      - name: 🔐 Security Audit (blocca solo High/Critical)
+        # Blocca il deploy se ci sono vulnerabilità HIGH o CRITICAL
+        # Le LOW vengono solo segnalate nel log senza bloccare
+        run: npm run audit:ci
 
       - name: 🏗️ Build Project
         run: npm run build
 
-      - name: 🔐 Security Audit (Check for vulnerabilities)
-        run: npm audit --audit-level=high
-
-      - name: 📂 Sync files to cPanel via SFTP
+      - name: 📂 Sync files to cPanel via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -39,3 +41,8 @@ jobs:
           local-dir: ./dist/
           server-dir: ./
           protocol: ftps
+          # exclude: trasferisce solo i file cambiati (delta sync)
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**

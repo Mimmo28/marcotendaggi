@@ -4,9 +4,9 @@ import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../../i18
 
 export function getStaticPaths() {
   const brands = [
-    { name: "Catilan Soggiorni", slug: "catilan_soggiorni", description: "Catilan Soggiorni furniture in Alessandria della Rocca (AG). Wood expressiveness and Italian design for your living room with Mega Shop Arredi." },
-    { name: "Divancasa", slug: "divancasa", description: "Divancasa sofas in Alessandria della Rocca. Absolute comfort and craftsmanship for your living rooms at Mega Shop Arredi in Agrigento." },
-    { name: "Proxima Mobili", slug: "proxima_mobili", description: "Innovative Proxima Mobili design in Alessandria della Rocca (AG). Essential lines to furnish your home in Sicily with character." }
+    { name: "Classic Curtains", slug: "catilan_soggiorni", description: "Classic curtains and elegant drapes for refined environments. Precious fabrics and artisan custom tailoring by Marco Tendaggi in Ribera (AG)." },
+    { name: "Modern Curtains", slug: "divancasa", description: "Clean lines and contemporary fabrics for designer interior curtains. Modern solutions with professional installation throughout the province of Agrigento." },
+    { name: "Outdoor & Garden", slug: "proxima_mobili", description: "Awnings, pergolas and outdoor sun protection. Weather-resistant materials and aesthetic solutions for terraces and gardens in Ribera." }
   ];
 
   return brands.map(brand => ({

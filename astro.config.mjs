@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.megashoparredi.it',
+  site: 'https://www.marcotendaggi.it',
   i18n: {
     defaultLocale: 'it',
     locales: ['it', 'en'],

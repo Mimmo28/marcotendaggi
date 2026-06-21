@@ -2,23 +2,27 @@
 import Layout from '../../layouts/Layout.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { Image } from 'astro:assets';
-import heroContatti from '../../assets/images/divani/Divani_pag_38.jpg';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const allImages = import.meta.glob('../../assets/images/immagini_tendaggi/*.{jpeg,jpg,png,webp}', { eager: true });
+const imgList = Object.keys(allImages).map(p => (allImages[p] as any).default);
+const heroContatti = imgList[45] ?? null;
 ---
 <Layout 
-  title="Contatta Mega Shop Arredi | Mobili e Casalinghi Agrigento" 
-  description="Contattaci per preventivi su arredi, cucine e casalinghi. Showroom ad Alessandria della Rocca (AG), al servizio di tutta la Sicilia e zona Monti Sicani.">
-  <!-- Immersive Header -->
+  title="Contatti e Preventivi Gratuiti | Marco Tendaggi" 
+  description="Richiedi un preventivo gratuito per tende su misura, tessuti pregiati e binari. Marco Tendaggi — Ribera (AG). Serviamo tutta Italia.">
+
+  <!-- Hero -->
   <section class="relative h-[50vh] min-h-[400px] w-full bg-black flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 w-full h-full opacity-60">
-      <Image src={heroContatti} alt="Contatti Hero" class="w-full h-full object-cover object-center" width={1920} height={600} loading="eager" />
+    <div class="absolute inset-0 w-full h-full opacity-55">
+      {heroContatti && <Image src={heroContatti} alt="Contatti Marco Tendaggi" class="w-full h-full object-cover object-center" width={1920} height={600} loading="eager" />}
       <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
     </div>
     
     <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto mt-16">
-      <span class="block text-sm tracking-[0.4em] text-accent-text font-bold uppercase mb-6">{t('contact.badge')}</span>
+      <span class="block text-sm tracking-[0.4em] text-white/60 font-bold uppercase mb-6">{t('contact.badge')}</span>
       <h1 class="text-5xl md:text-7xl font-bold font-heading mb-6 text-white tracking-tight">{t('contact.title')}</h1>
       <p class="text-xl font-light text-white/80 leading-relaxed max-w-2xl mx-auto">
         {t('contact.subtitle')}
@@ -26,18 +30,20 @@ const t = useTranslations(lang);
     </div>
   </section>
 
-  <!-- Contact Form Section -->
-  <section class="py-24 px-6 bg-primary border-b border-border/50">
-    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-start">
-      <div class="w-full lg:w-1/2">
-        <h2 class="text-4xl md:text-5xl font-bold font-heading mb-8 text-text tracking-tight uppercase">
+  <!-- Form + Info -->
+  <section class="py-20 md:py-28 px-4 md:px-6 bg-primary border-b border-border/50">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
+      
+      <!-- Form -->
+      <div class="w-full lg:w-3/5">
+        <h2 class="text-4xl md:text-5xl font-bold font-heading mb-6 text-text tracking-tight">
           {t('contact.form.title')}
         </h2>
-        <div class="w-16 h-1 bg-accent mb-12"></div>
+        <div class="w-16 h-px bg-accent mb-10"></div>
         
-        {/* Success/Error Alerts */}
-        <div id="form-status" class="mb-12 hidden transition-all duration-500 transform translate-y-2 opacity-0">
-          <div id="status-success" class="hidden bg-accent/10 border border-accent/20 p-6 rounded-sm">
+        <!-- Status alerts -->
+        <div id="form-status" class="mb-10 hidden transition-all duration-500 transform translate-y-2 opacity-0">
+          <div id="status-success" class="hidden bg-accent/10 border border-accent/20 p-6">
             <p class="text-accent-text font-bold flex items-center gap-3">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -45,7 +51,7 @@ const t = useTranslations(lang);
               {t('contact.form.success')}
             </p>
           </div>
-          <div id="status-error" class="hidden bg-red-500/10 border border-red-500/20 p-6 rounded-sm">
+          <div id="status-error" class="hidden bg-red-500/10 border border-red-500/20 p-6">
             <p class="text-red-600 font-bold flex items-center gap-3">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -55,77 +61,51 @@ const t = useTranslations(lang);
           </div>
         </div>
         
-        <form id="contact-form" action="/contact.php" method="POST" class="space-y-8">
-          {/* Honeypot for Anti-spam (Hidden from humans) */}
+        <form id="contact-form" action="/contact.php" method="POST" class="space-y-7">
+          <!-- Honeypot -->
           <div class="hidden" aria-hidden="true">
             <input type="text" name="website_honey_pot" tabindex="-1" autocomplete="off" />
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
             <div class="space-y-2">
-              <label for="name" class="text-xs uppercase tracking-widest font-bold text-text/50 ml-1">{t('contact.form.name')}</label>
-              <input 
-                type="text" 
-                id="name" 
-                name="name" 
-                required 
-                placeholder="Mario Rossi"
-                class="w-full bg-white border border-border/60 px-6 py-4 focus:border-accent focus:ring-0 transition-all outline-none rounded-sm text-text font-light"
-              />
+              <label for="name" class="text-xs uppercase tracking-widest font-bold text-text/50">{t('contact.form.name')}</label>
+              <input type="text" id="name" name="name" required placeholder="Mario Rossi"
+                class="w-full bg-surface border border-border/70 px-5 py-4 focus:border-accent focus:ring-0 transition-all outline-none text-text font-light" />
             </div>
             <div class="space-y-2">
-              <label for="email" class="text-xs uppercase tracking-widest font-bold text-text/50 ml-1">{t('contact.form.email')}</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                required 
-                placeholder="mario@esempio.it"
-                class="w-full bg-white border border-border/60 px-6 py-4 focus:border-accent focus:ring-0 transition-all outline-none rounded-sm text-text font-light"
-              />
+              <label for="email" class="text-xs uppercase tracking-widest font-bold text-text/50">{t('contact.form.email')}</label>
+              <input type="email" id="email" name="email" required placeholder="mario@esempio.it"
+                class="w-full bg-surface border border-border/70 px-5 py-4 focus:border-accent focus:ring-0 transition-all outline-none text-text font-light" />
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
             <div class="space-y-2">
-              <label for="phone" class="text-xs uppercase tracking-widest font-bold text-text/50 ml-1">{t('contact.form.phone')}</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                name="phone" 
-                placeholder="+39 333 1234567"
-                class="w-full bg-white border border-border/60 px-6 py-4 focus:border-accent focus:ring-0 transition-all outline-none rounded-sm text-text font-light"
-              />
+              <label for="phone" class="text-xs uppercase tracking-widest font-bold text-text/50">{t('contact.form.phone')}</label>
+              <input type="tel" id="phone" name="phone" placeholder="+39 333 1234567"
+                class="w-full bg-surface border border-border/70 px-5 py-4 focus:border-accent focus:ring-0 transition-all outline-none text-text font-light" />
             </div>
             <div class="space-y-2">
-              <label for="subject" class="text-xs uppercase tracking-widest font-bold text-text/50 ml-1">{t('contact.form.subject')}</label>
-              <select 
-                id="subject" 
-                name="subject" 
-                class="w-full bg-white border border-border/60 px-6 py-4 focus:border-accent focus:ring-0 transition-all outline-none rounded-sm text-text font-light appearance-none cursor-pointer"
-              >
+              <label for="subject" class="text-xs uppercase tracking-widest font-bold text-text/50">{t('contact.form.subject')}</label>
+              <select id="subject" name="subject"
+                class="w-full bg-surface border border-border/70 px-5 py-4 focus:border-accent focus:ring-0 transition-all outline-none text-text font-light appearance-none cursor-pointer">
                 <option value={t('contact.form.subject.info')}>{t('contact.form.subject.info')}</option>
-                <option value={t('contact.form.subject.kitchen')}>{t('contact.form.subject.kitchen')}</option>
-                <option value={t('contact.form.subject.night')}>{t('contact.form.subject.night')}</option>
-                <option value={t('contact.form.subject.day')}>{t('contact.form.subject.day')}</option>
+                <option value={t('contact.form.subject.curtains')}>{t('contact.form.subject.curtains')}</option>
+                <option value={t('contact.form.subject.outdoor')}>{t('contact.form.subject.outdoor')}</option>
+                <option value={t('contact.form.subject.fabric')}>{t('contact.form.subject.fabric')}</option>
                 <option value={t('contact.form.subject.other')}>{t('contact.form.subject.other')}</option>
               </select>
             </div>
           </div>
 
           <div class="space-y-2">
-            <label for="message" class="text-xs uppercase tracking-widest font-bold text-text/50 ml-1">{t('contact.form.message')}</label>
-            <textarea 
-              id="message" 
-              name="message" 
-              rows="5" 
-              required 
-              placeholder="..."
-              class="w-full bg-white border border-border/60 px-6 py-4 focus:border-accent focus:ring-0 transition-all outline-none rounded-sm text-text font-light resize-none"
-            ></textarea>
+            <label for="message" class="text-xs uppercase tracking-widest font-bold text-text/50">{t('contact.form.message')}</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Descrivici la tua richiesta..."
+              class="w-full bg-surface border border-border/70 px-5 py-4 focus:border-accent focus:ring-0 transition-all outline-none text-text font-light resize-none"></textarea>
           </div>
 
-          <button type="submit" class="inline-flex items-center justify-center bg-accent text-black px-10 py-5 hover:bg-black transition-all duration-300 font-bold text-sm tracking-widest uppercase shadow-lg hover:shadow-xl rounded-sm group">
+          <button type="submit" class="inline-flex items-center justify-center bg-accent text-white px-10 py-5 hover:bg-text transition-all duration-300 font-bold text-sm tracking-widest uppercase shadow-lg group">
             <span class="mr-3">{t('contact.form.send')}</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -134,107 +114,114 @@ const t = useTranslations(lang);
         </form>
       </div>
 
-      <div class="w-full lg:w-1/2 lg:mt-24">
-        <div class="bg-primary border border-border/50 p-10 md:p-16 space-y-12 relative overflow-hidden group">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-150"></div>
-          
-          <div class="relative z-10 flex items-start gap-8">
-            <div class="w-12 h-12 bg-accent text-black flex items-center justify-center rounded-full shrink-0 shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <!-- Info laterale -->
+      <div class="w-full lg:w-2/5 space-y-6">
+        <!-- Card contatti -->
+        <div class="bg-surface border border-border/50 text-text p-8 md:p-10 space-y-8 shadow-sm">
+          <div class="flex items-start gap-6">
+            <div class="w-11 h-11 bg-accent/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </div>
             <div>
-              <h3 class="text-xl font-bold font-heading mb-2 uppercase tracking-wide">{t('contact.call')}</h3>
-              <p class="text-text/60 font-light mb-1">Domenico Puglia</p>
-              <a href="tel:3312527613" class="text-xl md:text-2xl font-bold text-accent-text hover:text-text transition-colors break-all">+39 331 252 7613</a>
+              <h3 class="text-sm font-bold uppercase tracking-widest text-accent-text mb-2">{t('contact.call')}</h3>
+              <a href="tel:3287323742" class="text-2xl font-heading font-bold text-text hover:text-accent-text transition-colors">328 732 3742</a>
             </div>
           </div>
 
-          <div class="relative z-10 flex items-start gap-8 border-t border-border/30 pt-10">
-            <div class="w-12 h-12 bg-accent text-black flex items-center justify-center rounded-full shrink-0 shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          <div class="border-t border-border/50 pt-8 flex items-start gap-6">
+            <div class="w-11 h-11 bg-accent/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
             <div>
-              <h3 class="text-xl font-bold font-heading mb-4 uppercase tracking-wide">Social</h3>
-              <div class="flex gap-6">
-                <a href={t('social.facebook')} target="_blank" rel="noopener noreferrer" class="p-3 bg-white border border-border/60 rounded-full hover:bg-accent hover:border-accent transition-all duration-300 text-text/70 hover:text-black group-social shadow-sm" aria-label="Facebook">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                </a>
-                <a href={t('social.instagram')} target="_blank" rel="noopener noreferrer" class="p-3 bg-white border border-border/60 rounded-full hover:bg-accent hover:border-accent transition-all duration-300 text-text/70 hover:text-black group-social shadow-sm" aria-label="Instagram">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-                <a href={t('social.tiktok')} target="_blank" rel="noopener noreferrer" class="p-3 bg-white border border-border/60 rounded-full hover:bg-accent hover:border-accent transition-all duration-300 text-text/70 hover:text-black group-social shadow-sm" aria-label="TikTok">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
-                </a>
-              </div>
+              <h3 class="text-sm font-bold uppercase tracking-widest text-accent-text mb-2">{t('contact.write')}</h3>
+              <a href="mailto:info@marcotendaggi.it" class="text-text/80 hover:text-accent-text transition-colors">info@marcotendaggi.it</a>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Info & Map Section -->
-  <section class="py-24 px-6 max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-20">
-      <div class="space-y-16">
-        <div>
-          <h2 class="text-3xl font-heading font-bold mb-8 flex items-center gap-5 text-text tracking-tight">
-            <div class="w-14 h-14 bg-accent/10 flex items-center justify-center rounded-full text-accent-text shadow-inner border border-accent/20">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div class="border-t border-border/50 pt-8 flex items-start gap-6">
+            <div class="w-11 h-11 bg-accent/10 flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
-            {t('home.visit')}
-          </h2>
-          <div class="text-text/70 font-light ml-0 md:ml-20 text-lg">
-            <a href="https://maps.app.goo.gl/uYutyV15jDfAmnhV6" target="_blank" rel="noopener noreferrer" class="transition-colors duration-300 hover:text-accent-text hover:underline block">
-              <p>Via Nazionale, 4</p>
-              <p>92010 Alessandria della Rocca (AG)</p>
-            </a>
+            <div>
+              <h3 class="text-sm font-bold uppercase tracking-widest text-accent-text mb-2">{t('home.address')}</h3>
+              <p class="text-text/70 font-light text-sm leading-relaxed">Via Canova 15 (il cangurotto)<br/>92016 Ribera (AG)</p>
+            </div>
           </div>
         </div>
-        
-        <div>
-          <h2 class="text-3xl font-heading font-bold mb-8 flex items-center gap-5 text-text tracking-tight">
-             <div class="w-14 h-14 bg-accent/10 flex items-center justify-center rounded-full text-accent-text shadow-inner border border-accent/20">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+
+        <!-- Mercati -->
+        <div class="bg-surface border border-border/50 p-8">
+          <h3 class="text-sm font-bold uppercase tracking-widest text-accent-text mb-5">{t('home.markets.title')}</h3>
+          <div class="space-y-3 text-text/70 font-light">
+            <div class="flex items-center gap-3">
+              <span class="text-accent-text font-bold">✔</span>
+              <span>{t('home.markets.pe')}</span>
             </div>
-            {t('footer.hours')}
-          </h2>
-          <div class="text-text/70 font-light ml-0 md:ml-20 text-lg">
-            <table class="w-full max-w-sm border-collapse">
-              <tbody>
-                <tr class="border-b border-border/60">
-                  <td class="py-4 font-semibold text-text">{t('footer.hours.val1')}</td>
-                  <td class="py-4 text-right">09:00 - 13:00<br/>16:00 - 20:00</td>
-                </tr>
-                <tr>
-                  <td class="py-4 font-semibold text-text">{t('footer.hours.val4').split(':')[0]}</td>
-                  <td class="py-4 text-right text-accent-text font-bold tracking-widest uppercase text-sm">{t('footer.hours.val4').split(':')[1]}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="flex items-center gap-3">
+              <span class="text-accent-text font-bold">✔</span>
+              <span>{t('home.markets.fav')}</span>
+            </div>
           </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/393287323742" target="_blank" rel="noopener noreferrer"
+          class="flex items-center justify-center gap-4 bg-[#25D366] text-white p-5 font-bold uppercase tracking-widest text-sm hover:bg-[#1da851] transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c-.003 1.396.366 2.76 1.061 3.962L0 16l4.205-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+          </svg>
+          Scrivici su WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mappa -->
+  <section class="py-16 md:py-20 px-4 md:px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-14">
+      <div class="space-y-10">
+        <div>
+          <h2 class="text-3xl font-heading font-bold mb-5 text-text">{t('home.visit.subtitle')}</h2>
+          <div class="text-text/65 font-light text-base leading-relaxed space-y-1">
+            <p>Via Canova 15 (il cangurotto)</p>
+            <p>92016 Ribera (AG)</p>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text mb-4 uppercase tracking-widest text-xs text-accent-text">{t('home.hours.title')}</h3>
+          <table class="w-full max-w-sm text-text/65 font-light text-sm border-collapse">
+            <tbody>
+              <tr class="border-b border-border/50">
+                <td class="py-3 font-semibold text-text">{t('footer.hours.val1')}</td>
+                <td class="py-3 text-right">{t('footer.hours.val2')}<br/>{t('footer.hours.val3')}</td>
+              </tr>
+              <tr>
+                <td class="py-3 font-semibold text-text">Domenica</td>
+                <td class="py-3 text-right text-accent-text font-bold uppercase text-xs tracking-widest">Chiuso</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       
-      <div class="h-[500px] w-full bg-border/20 relative flex items-center justify-center group shadow-xl overflow-hidden rounded-sm">
+      <div class="h-[420px] relative overflow-hidden shadow-xl border border-border/30 group">
+        <div class="absolute inset-0 bg-accent/10 pointer-events-none mix-blend-multiply z-10 opacity-50 group-hover:opacity-0 transition-opacity duration-700"></div>
         <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1575.6791986423456!2d13.4471032!3d37.5615797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x131a1532f1ea38d5%3A0xc3af87265a7f2dc1!2sVia%20Nazionale%2C%204%2C%2092010%20Alessandria%20della%20Rocca%20AG!5e0!3m2!1sit!2sit!4v1703164996457!5m2!1sit!2sit" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.7770830492817!2d13.2623196!3d37.4934829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x131a6bf75a37104d%3A0xfa5f755a4648f712!2sIl%20Cangurotto%20-%20Tendaggi-%20Intimo%20%26%20Corredo!5e0!3m2!1sit!2sit!4v1718800000000!5m2!1sit!2sit" 
             width="100%" 
             height="100%" 
             style="border:0;" 
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade"
-            class="absolute inset-0 grayscale contrast-125 opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+            class="absolute inset-0"
             title={t('home.map.title')}
         ></iframe>
       </div>
@@ -243,7 +230,6 @@ const t = useTranslations(lang);
 </Layout>
 
 <script>
-  // Handle Success/Error message display based on URL params
   const urlParams = new URLSearchParams(window.location.search);
   const success = urlParams.get('success');
   const alertContainer = document.getElementById('form-status');
@@ -252,24 +238,13 @@ const t = useTranslations(lang);
 
   if ((success === 'true' || success === 'false') && alertContainer) {
     alertContainer.classList.remove('hidden');
-    
-    // Trigger animation
     requestAnimationFrame(() => {
       alertContainer.classList.remove('opacity-0', 'translate-y-2');
       alertContainer.classList.add('opacity-100', 'translate-y-0');
     });
-
-    if (success === 'true' && successAlert) {
-      successAlert.classList.remove('hidden');
-    } else if (success === 'false' && errorAlert) {
-      errorAlert.classList.remove('hidden');
-    }
-
-    // Scroll to the alert if it's there
+    if (success === 'true' && successAlert) successAlert.classList.remove('hidden');
+    else if (success === 'false' && errorAlert) errorAlert.classList.remove('hidden');
     alertContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-    // Clean up the URL without reloading to avoid repeated alerts on refresh
-    const cleanUrl = window.location.pathname + window.location.hash;
-    window.history.replaceState({}, document.title, cleanUrl);
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
   }
 </script>
