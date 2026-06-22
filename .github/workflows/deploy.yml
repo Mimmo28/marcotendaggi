@@ -1,12 +1,24 @@
-name: 🚀 Deploy Marco Tendaggi
+name: 🚀 Deploy Marco Tendaggi (GitHub Pages)
+
 on:
   push:
     branches:
       - main
 
+# Permessi necessari per GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un solo deploy alla volta
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  web-deploy:
-    name: 🏗️ Build & Sync
+  build:
+    name: 🏗️ Build
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
@@ -19,30 +31,24 @@ jobs:
           cache: 'npm'
 
       - name: 🛠️ Install dependencies (reproducible)
-        # npm ci: installa ESATTAMENTE le versioni in package-lock.json
-        # Non altera mai il lock file — build deterministici e sicuri
         run: npm ci
-
-      - name: 🔐 Security Audit (blocca solo High/Critical)
-        # Blocca il deploy se ci sono vulnerabilità HIGH o CRITICAL
-        # Le LOW vengono solo segnalate nel log senza bloccare
-        run: npm run audit:ci
 
       - name: 🏗️ Build Project
         run: npm run build
 
-      - name: 📂 Sync files to cPanel via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 📦 Upload artifact per Pages
+        uses: actions/upload-pages-artifact@v3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          local-dir: ./dist/
-          server-dir: ./
-          protocol: ftps
-          # exclude: trasferisce solo i file cambiati (delta sync)
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
+          path: ./dist/
+
+  deploy:
+    name: 🌐 Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -7,7 +7,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.marcotendaggi.it',
+  site: 'https://Mimmo28.github.io',
+  base: '/marcotendaggi',
   i18n: {
     defaultLocale: 'it',
     locales: ['it', 'en'],
