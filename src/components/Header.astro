@@ -17,17 +17,17 @@ const links = [
 ];
 
 const subMenuLinks = [
-  { href: '/collezioni/tende-interno', label: 'Tende da Interno' },
-  { href: '/collezioni/tende-misura', label: 'Tende su Misura' },
-  { href: '/collezioni/tessuti', label: 'Tessuti Pregiati' },
-  { href: '/collezioni/binari', label: 'Binari & Accessori' },
-  { href: '/collezioni/tende-rullo', label: 'Tende a Rullo' },
-  { href: '/collezioni/veneziane', label: 'Veneziane & Pannelli' },
-  { href: '/collezioni/devore', label: 'Devorè' },
-  { href: '/collezioni/jeorgette-seta', label: 'Jeorgette in Seta' },
-  { href: '/collezioni/jeorgette-calata', label: 'Jeorgette Calata o Velluto' },
-  { href: '/collezioni/misto-lino', label: 'Misto Lino' },
-  { href: '/collezioni/oceania', label: 'Oceania' },
+  { href: '/collezioni/tende-interno',   labelKey: 'nav.sub.tende-interno'    },
+  { href: '/collezioni/tende-misura',    labelKey: 'nav.sub.tende-misura'     },
+  { href: '/collezioni/tessuti',         labelKey: 'nav.sub.tessuti'          },
+  { href: '/collezioni/binari',          labelKey: 'nav.sub.binari'           },
+  { href: '/collezioni/tende-rullo',     labelKey: 'nav.sub.tende-rullo'      },
+  { href: '/collezioni/veneziane',       labelKey: 'nav.sub.veneziane'        },
+  { href: '/collezioni/devore',          labelKey: 'nav.sub.devore'           },
+  { href: '/collezioni/jeorgette-seta',  labelKey: 'nav.sub.jeorgette-seta'   },
+  { href: '/collezioni/jeorgette-calata',labelKey: 'nav.sub.jeorgette-calata' },
+  { href: '/collezioni/misto-lino',      labelKey: 'nav.sub.misto-lino'       },
+  { href: '/collezioni/oceania',         labelKey: 'nav.sub.oceania'          },
 ];
 ---
 
@@ -68,7 +68,7 @@ const subMenuLinks = [
             <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[440px] bg-surface border border-border shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 origin-top p-6 grid grid-cols-2 gap-3 rounded-xl">
               {subMenuLinks.map(sub => (
                 <a href={translatePath(sub.href)} class="text-sm text-text/65 hover:text-accent-text transition-colors py-2 px-3 rounded-lg hover:bg-primary/50">
-                  {sub.label}
+                  {t(sub.labelKey as any)}
                 </a>
               ))}
             </div>
@@ -112,7 +112,7 @@ const subMenuLinks = [
 <div id="mobile-menu" class="fixed inset-y-0 left-0 w-[85%] max-w-sm bg-surface z-[70] transform -translate-x-full invisible transition-all duration-400 ease-in-out flex flex-col pt-6 px-6 lg:hidden overflow-y-auto shadow-2xl">
   <div class="flex items-center justify-between mb-10">
     <Image src={logoSito} alt="Marco Tendaggi" class="h-10 w-auto object-contain" loading="eager" />
-    <button id="close-menu-btn" aria-label="Chiudi menu" class="p-2 text-text hover:text-accent-text transition-colors">
+    <button id="close-menu-btn" aria-label={t('header.aria.close')} class="p-2 text-text hover:text-accent-text transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
       </svg>
@@ -130,7 +130,7 @@ const subMenuLinks = [
             <a href={translatedHref} class="text-lg font-medium text-text py-3 hover:text-accent-text transition-colors">
               {t(link.labelKey)}
             </a>
-            <button id="mobile-collections-icon" class="p-2" aria-label="Espandi">
+            <button id="mobile-collections-icon" class="p-2" aria-label={t('header.aria.expand')}>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-text/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -139,7 +139,7 @@ const subMenuLinks = [
           <div id="mobile-collections-menu" class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 pl-4">
             {subMenuLinks.map(sub => (
               <a href={translatePath(sub.href)} class="block text-sm text-text/60 py-2 hover:text-accent-text transition-colors border-l border-border/50 pl-4">
-                {sub.label}
+                {t(sub.labelKey as any)}
               </a>
             ))}
           </div>

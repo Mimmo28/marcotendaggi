@@ -32,14 +32,14 @@ const year = new Date().getFullYear();
 
       <!-- Links -->
       <div class="md:col-span-2 md:col-start-6">
-        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-text mb-5">Prodotti</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-text mb-5">{t('footer.products')}</h3>
         <ul class="space-y-3 text-sm text-text-muted font-light">
-          <li><a href="/collezioni/tende-interno" class="hover:text-accent-text transition-colors">Tende da Interno</a></li>
-          <li><a href="/collezioni/tende-misura" class="hover:text-accent-text transition-colors">Tende su Misura</a></li>
-          <li><a href="/collezioni/tessuti" class="hover:text-accent-text transition-colors">Tessuti Pregiati</a></li>
-          <li><a href="/collezioni/binari" class="hover:text-accent-text transition-colors">Binari & Accessori</a></li>
-          <li><a href="/collezioni/tende-rullo" class="hover:text-accent-text transition-colors">Tende a Rullo</a></li>
-          <li><a href="/collezioni/veneziane" class="hover:text-accent-text transition-colors">Veneziane</a></li>
+          <li><a href="/collezioni/tende-interno" class="hover:text-accent-text transition-colors">{t('cat.tende-interno')}</a></li>
+          <li><a href="/collezioni/tende-misura" class="hover:text-accent-text transition-colors">{t('cat.tende-misura')}</a></li>
+          <li><a href="/collezioni/tessuti" class="hover:text-accent-text transition-colors">{t('cat.tessuti')}</a></li>
+          <li><a href="/collezioni/binari" class="hover:text-accent-text transition-colors">{t('cat.binari')}</a></li>
+          <li><a href="/collezioni/tende-rullo" class="hover:text-accent-text transition-colors">{t('cat.tende-rullo')}</a></li>
+          <li><a href="/collezioni/veneziane" class="hover:text-accent-text transition-colors">{t('cat.veneziane')}</a></li>
         </ul>
       </div>
 
@@ -65,13 +65,13 @@ const year = new Date().getFullYear();
       <div class="md:col-span-2">
         <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-text mb-5">{t("footer.markets")}</h3>
         <ul class="space-y-2 text-sm text-text-muted font-light mb-8">
-          <li>✔ Porto Empedocle<br/><span class="text-xs text-text/40 ml-4">Giovedì</span></li>
-          <li>✔ Favara<br/><span class="text-xs text-text/40 ml-4">Venerdì</span></li>
+          <li>✔ Porto Empedocle<br/><span class="text-xs text-text/40 ml-4">{t('footer.day.thu')}</span></li>
+          <li>✔ Favara<br/><span class="text-xs text-text/40 ml-4">{t('footer.day.fri')}</span></li>
         </ul>
         <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-text mb-3">{t("footer.hours")}</h3>
         <p class="text-sm text-text-muted font-light leading-relaxed">
-          Lun–Sab<br/>09:00–13:00 / 16:00–20:00<br/>
-          <span class="text-xs text-text/40">Dom: Chiuso</span>
+          {t('footer.hours.weekday')}<br/>09:00–13:00 / 16:00–20:00<br/>
+          <span class="text-xs text-text/40">{t('footer.hours.weekend')}</span>
         </p>
       </div>
     </div>

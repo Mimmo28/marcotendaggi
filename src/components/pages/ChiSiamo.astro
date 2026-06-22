@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 ---
 <Layout
   title={t('nav.chisiamo')}
-  description="Scopri Marco Tendaggi: passione per i tessuti pregiati e i tendaggi su misura. Showroom a Ribera (AG), mercati settimanali a Porto Empedocle e Favara. Preventivi gratuiti in tutta Italia.">
+  description={t('about.meta.desc')}>
 
   <!-- Hero -->
   <section class="relative h-[60vh] min-h-[500px] w-full bg-black flex items-center justify-center overflow-hidden">
@@ -46,17 +46,17 @@ const t = useTranslations(lang);
             <p>Via Canova 15 (il cangurotto)<br/>92016 Ribera (AG)</p>
           </div>
           <div>
-            <p class="font-semibold text-text text-xs tracking-widest uppercase mb-1 text-accent-text">Mercati Settimanali</p>
-            <p>✔ Porto Empedocle — Giovedì</p>
-            <p>✔ Favara — Venerdì</p>
+            <p class="font-semibold text-text text-xs tracking-widest uppercase mb-1 text-accent-text">{t('about.markets.label')}</p>
+            <p>✔ {t('home.markets.pe')}</p>
+            <p>✔ {t('home.markets.fav')}</p>
           </div>
           <div>
-            <p class="font-semibold text-text text-xs tracking-widest uppercase mb-1 text-accent-text">Telefono</p>
+            <p class="font-semibold text-text text-xs tracking-widest uppercase mb-1 text-accent-text">{t('home.phone')}</p>
             <a href="tel:3287323742" class="hover:text-accent-text transition-colors">328 732 3742</a>
           </div>
           <div>
-            <p class="font-semibold text-text text-xs tracking-widest uppercase mb-1 text-accent-text">Copertura</p>
-            <p>Tutta Italia — Preventivi Gratuiti</p>
+            <p class="font-semibold text-text text-xs tracking-widest uppercase mb-1 text-accent-text">{t('about.coverage.label')}</p>
+            <p>{t('about.coverage.val')}</p>
           </div>
         </div>
       </div>
